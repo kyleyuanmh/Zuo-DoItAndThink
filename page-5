@@ -1,0 +1,82 @@
+/*
+ * 有两个栈组成的队列(C++).
+ *
+*/
+
+#include <iostream>
+#include<stack>
+using namespace std;
+
+class MyQueue1
+{
+private:
+    stack<int> stack1;
+    stack<int> stack2;
+public:
+    void push(int a)
+    {
+        this->stack1.push(a);
+    }
+    void pop()
+    {
+        if(this->stack1.empty()&&this->stack2.empty())
+        {
+            cout<<"队列中没有元素了哦！"<<endl;
+        }
+        else{
+                if(!this->stack2.empty())
+                    this->stack2.pop();
+                else//stack2空了，需要将1的所有元素都放到2中
+                {
+                    while(!this->stack1.empty())
+                    {
+                        int num=this->stack1.top();
+                        this->stack1.pop();
+                        this->stack2.push(num);
+                    }
+                    this->stack2.pop();
+                }
+            }
+    }
+
+    int top()
+    {
+        if(this->stack1.empty()&&this->stack2.empty())
+        {
+            cout<<"没有元素了！只能给你返回0了！"<<endl;
+            return 0;
+        }
+        else
+        {
+            if(!this->stack2.empty())
+                return this->stack2.top();
+            else
+            {
+                while(!this->stack1.empty())
+                {
+                    int num=this->stack1.top();
+                    this->stack1.pop();
+                    this->stack1.push(num);
+                }
+                return this->stack2.top();
+            }
+        }
+    }
+};
+
+int main()
+{
+    MyQueue1 que;
+    que.push(1);
+    cout<<que.top()<<endl;
+    que.push(2);
+    cout<<que.top()<<endl;
+    que.push(3);
+    cout<<que.top()<<endl;
+    que.push(4);
+    cout<<que.top()<<endl;
+    que.push(5);
+    cout<<que.top()<<endl;
+
+    return 0;
+}

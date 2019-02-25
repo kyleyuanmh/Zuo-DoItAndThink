@@ -1,0 +1,78 @@
+/*
+ * 设计一个有getMin功能的栈(C++).
+ * 
+*/
+
+#include <iostream>
+#include<stack>
+using namespace std;
+
+class MyStack1
+{
+private:
+    stack<int> dataStack;
+    stack<int> minStack;
+public:
+    void push(int a)
+    {
+        this->dataStack.push(a);
+        if(!minStack.empty())//如果不空，需要跟minStack的栈顶进行比较，只有小于等于栈顶的元素才可以放进去
+        {
+            if(a<=this->minStack.top())
+            {
+                this->minStack.push(a);
+            }
+        }
+        else{//minStack本来就是空的
+            this->minStack.push(a);
+        }
+    }
+    void pop()
+    {
+        int num=dataStack.top();
+        dataStack.pop();
+        if(num<=this->minStack.top())
+        {
+            this->minStack.pop();
+        }
+    }
+    int getmin()
+    {
+        if(!this->minStack.empty())
+            return this->minStack.top();
+        else{
+            cout<<"栈内已经没有元素了哦！"<<endl;
+        }
+    }
+
+};
+
+int main()
+{
+    MyStack1 st;
+    st.push(3);
+    cout<<"最小值为："<<st.getmin()<<endl;
+    st.push(4);
+    cout<<"最小值为："<<st.getmin()<<endl;
+    st.push(5);
+    cout<<"最小值为："<<st.getmin()<<endl;
+    st.push(1);
+    cout<<"最小值为："<<st.getmin()<<endl;
+    st.push(2);
+    cout<<"最小值为："<<st.getmin()<<endl;
+    st.push(1);
+    cout<<"最小值为："<<st.getmin()<<endl;
+
+    st.pop();
+    cout<<"最小值为："<<st.getmin()<<endl;
+    st.pop();
+    cout<<"最小值为："<<st.getmin()<<endl;
+    st.pop();
+    cout<<"最小值为："<<st.getmin()<<endl;
+    st.pop();
+    cout<<"最小值为："<<st.getmin()<<endl;
+    st.pop();
+    cout<<"最小值为："<<st.getmin()<<endl;
+
+    return 0;
+}
